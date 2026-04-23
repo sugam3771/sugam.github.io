@@ -1,344 +1,571 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sugam Kharel</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sugam Kharel // dev from nepal</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap');
 
-    body {
-      background: #0a0a0a;
-      color: #e0e0e0;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 16px;
-      line-height: 1.6;
-      min-height: 100vh;
-    }
+:root {
+  --cyan: #00f5ff;
+  --pink: #ff00cc;
+  --purple: #9900ff;
+  --dark: #050510;
+  --darker: #020208;
+  --silver: #c8d4e8;
+  --gold: #ffd700;
+}
 
-    a { color: #6fcf97; text-decoration: none; }
-    a:hover { text-decoration: underline; }
+* { margin:0; padding:0; box-sizing:border-box; }
 
-    .container {
-      max-width: 640px;
-      margin: 0 auto;
-      padding: 48px 24px;
-    }
+body {
+  background: var(--darker);
+  color: var(--silver);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 14px;
+  overflow-x: hidden;
+}
 
-    /* ── header ── */
-    .header {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      margin-bottom: 40px;
-    }
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 10% 20%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 30% 60%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 50% 10%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 70% 80%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 90% 40%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 25% 35%, #00f5ff 0%, transparent 100%),
+    radial-gradient(1px 1px at 60% 90%, #ff00cc 0%, transparent 100%),
+    radial-gradient(2px 2px at 85% 55%, #9900ff 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
 
-    .avatar {
-      width: 72px;
-      height: 72px;
-      border-radius: 50%;
-      background: #1c3028;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-      font-weight: 700;
-      color: #6fcf97;
-      flex-shrink: 0;
-    }
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg, transparent, transparent 2px,
+    rgba(0,0,0,0.06) 2px, rgba(0,0,0,0.06) 4px);
+  pointer-events: none;
+  z-index: 999;
+}
 
-    .header-text h1 {
-      font-size: 24px;
-      font-weight: 700;
-      color: #ededed;
-    }
+.wrapper {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 24px 16px 60px;
+}
 
-    .header-text p {
-      color: #555;
-      font-size: 14px;
-      margin-top: 4px;
-    }
+.ticker-wrap {
+  background: #000;
+  border: 1px solid #1a1a4a;
+  border-top: 2px solid var(--cyan);
+  overflow: hidden;
+  padding: 6px 0;
+  margin-bottom: 20px;
+}
 
-    .badge {
-      display: inline-block;
-      background: #1c1c1c;
-      color: #555;
-      font-size: 11px;
-      padding: 3px 8px;
-      border-radius: 4px;
-      margin-top: 6px;
-      margin-right: 4px;
-      border: 1px solid #222;
-    }
+.ticker {
+  display: flex;
+  animation: ticker-scroll 25s linear infinite;
+  white-space: nowrap;
+}
 
-    /* ── section ── */
-    .section {
-      margin-bottom: 40px;
-    }
+.ticker-item {
+  padding: 0 32px;
+  font-family: 'VT323', monospace;
+  font-size: 16px;
+  color: var(--cyan);
+}
 
-    .section-label {
-      font-size: 10px;
-      letter-spacing: 2px;
-      color: #2c2c2c;
-      margin-bottom: 14px;
-      text-transform: uppercase;
-    }
+.ticker-item span { color: var(--pink); margin: 0 8px; }
 
-    /* ── about ── */
-    .about {
-      color: #888;
-      font-size: 14px;
-      line-height: 1.8;
-      background: #111;
-      padding: 16px 18px;
-      border-radius: 10px;
-      border: 1px solid #1a1a1a;
-    }
+@keyframes ticker-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
 
-    /* ── app cards ── */
-    .app-card {
-      background: #111;
-      border: 1px solid #1e1e1e;
-      border-radius: 10px;
-      padding: 18px;
-      margin-bottom: 12px;
-      display: flex;
-      align-items: flex-start;
-      gap: 16px;
-      transition: border-color 0.2s;
-    }
+.banner {
+  text-align: center;
+  padding: 32px 16px 24px;
+  margin-bottom: 8px;
+}
 
-    .app-card:hover {
-      border-color: #2a2a2a;
-    }
+.banner-top {
+  font-size: 10px;
+  letter-spacing: 6px;
+  color: var(--cyan);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  opacity: 0.7;
+}
 
-    .app-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 10px;
-      background: #1c3028;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-      flex-shrink: 0;
-    }
+.banner h1 {
+  font-family: 'VT323', monospace;
+  font-size: 72px;
+  line-height: 1;
+  background: linear-gradient(135deg, var(--cyan) 0%, var(--pink) 50%, var(--purple) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 20px rgba(0,245,255,0.4));
+  animation: glow-pulse 3s ease-in-out infinite;
+}
 
-    .app-info { flex: 1; }
+@keyframes glow-pulse {
+  0%, 100% { filter: drop-shadow(0 0 20px rgba(0,245,255,0.4)); }
+  50%       { filter: drop-shadow(0 0 40px rgba(255,0,204,0.6)); }
+}
 
-    .app-name {
-      font-size: 15px;
-      font-weight: 600;
-      color: #ededed;
-      margin-bottom: 4px;
-    }
+.banner-sub {
+  font-family: 'VT323', monospace;
+  font-size: 22px;
+  color: var(--silver);
+  margin-top: 8px;
+  letter-spacing: 3px;
+}
 
-    .app-desc {
-      font-size: 12px;
-      color: #555;
-      margin-bottom: 10px;
-      line-height: 1.5;
-    }
+.banner-sub span {
+  color: var(--cyan);
+  animation: blink 1.2s step-end infinite;
+}
 
-    .app-links { display: flex; gap: 8px; flex-wrap: wrap; }
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
 
-    .dl-btn {
-      display: inline-block;
-      background: #1c3028;
-      color: #6fcf97;
-      font-size: 12px;
-      font-weight: 600;
-      padding: 6px 14px;
-      border-radius: 6px;
-      border: 1px solid #2a5c3f;
-      text-decoration: none;
-    }
+.nav {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  margin: 20px 0 28px;
+  flex-wrap: wrap;
+}
 
-    .dl-btn:hover {
-      background: #243d30;
-      text-decoration: none;
-    }
+.nav a {
+  display: inline-block;
+  padding: 6px 16px;
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  letter-spacing: 1px;
+  text-decoration: none;
+  color: #000;
+  background: linear-gradient(180deg, #b0c8ff 0%, #6080cc 40%, #3050aa 60%, #6080cc 100%);
+  border: 2px solid #8090cc;
+  border-top-color: #d0e0ff;
+  border-left-color: #d0e0ff;
+  border-bottom-color: #102060;
+  border-right-color: #102060;
+  text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
+}
 
-    .dl-btn.secondary {
-      background: #1a1a1a;
-      color: #555;
-      border-color: #222;
-    }
+.nav a:hover { filter: brightness(1.2); }
+.nav a:active {
+  border-top-color: #102060; border-left-color: #102060;
+  border-bottom-color: #d0e0ff; border-right-color: #d0e0ff;
+}
 
-    .dl-btn.secondary:hover {
-      background: #202020;
-      color: #888;
-    }
+.construction {
+  text-align: center;
+  padding: 10px;
+  background: repeating-linear-gradient(
+    45deg, #1a1000, #1a1000 10px, #000 10px, #000 20px);
+  border: 2px solid var(--gold);
+  margin-bottom: 20px;
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  color: var(--gold);
+  letter-spacing: 2px;
+  animation: con-blink 2s step-end infinite;
+}
 
-    /* ── links ── */
-    .link-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 0;
-      border-bottom: 1px solid #151515;
-      font-size: 14px;
-      color: #888;
-    }
+@keyframes con-blink {
+  0%, 100% { border-color: var(--gold); color: var(--gold); }
+  50%       { border-color: var(--pink); color: var(--pink); }
+}
 
-    .link-row:last-child { border-bottom: none; }
+.counter-box {
+  text-align: center;
+  padding: 16px;
+  background: #000;
+  border: 1px solid #1a1a4a;
+  margin-bottom: 20px;
+}
 
-    .link-row .icon {
-      font-size: 16px;
-      width: 24px;
-      text-align: center;
-    }
+.counter-label {
+  font-family: 'VT323', monospace;
+  font-size: 13px;
+  color: #3050a0;
+  letter-spacing: 3px;
+  margin-bottom: 8px;
+}
 
-    .link-row a { color: #6fcf97; }
+.counter-digits { display: inline-flex; gap: 3px; }
 
-    /* ── skills ── */
-    .skill-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
+.digit {
+  background: #000;
+  border: 1px solid #003300;
+  color: #00ff41;
+  font-family: 'VT323', monospace;
+  font-size: 28px;
+  width: 22px;
+  text-align: center;
+  text-shadow: 0 0 8px #00ff41;
+}
 
-    .skill {
-      background: #111;
-      border: 1px solid #1e1e1e;
-      color: #555;
-      font-size: 12px;
-      padding: 6px 12px;
-      border-radius: 6px;
-    }
+.neon-div {
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%, var(--purple) 20%,
+    var(--cyan) 50%, var(--pink) 80%, transparent 100%);
+  margin: 24px 0;
+  box-shadow: 0 0 8px rgba(0,245,255,0.4);
+}
 
-    /* ── footer ── */
-    .footer {
-      margin-top: 60px;
-      padding-top: 24px;
-      border-top: 1px solid #151515;
-      color: #2a2a2a;
-      font-size: 12px;
-      text-align: center;
-    }
+.panel {
+  background: linear-gradient(180deg, #0a0a2a 0%, #050518 100%);
+  border: 1px solid #1a1a4a;
+  border-top-color: #3030aa;
+  border-left-color: #2020aa;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
 
-    /* ── divider ── */
-    .divider {
-      height: 1px;
-      background: #151515;
-      margin: 40px 0;
-    }
-  </style>
+.panel-title {
+  background: linear-gradient(90deg, #0a0aaa 0%, #2020cc 40%, #0a0aaa 100%);
+  padding: 6px 14px;
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  letter-spacing: 2px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-shadow: 0 0 8px rgba(100,150,255,0.8);
+}
+
+.panel-title .dot { width:10px; height:10px; border-radius:50%; display:inline-block; }
+.dot-r { background:#ff5f56; box-shadow:0 0 4px #ff5f56; }
+.dot-y { background:#ffbd2e; box-shadow:0 0 4px #ffbd2e; }
+.dot-g { background:#27c93f; box-shadow:0 0 4px #27c93f; }
+
+.panel-body { padding: 18px 20px; }
+
+.about-text { color:#a0b8d0; line-height:1.9; font-size:13px; }
+.about-text .hi {
+  font-family:'VT323',monospace; font-size:28px;
+  color:var(--cyan); display:block; margin-bottom:8px;
+}
+.highlight { color:var(--cyan); }
+.highlight-pink { color:var(--pink); }
+.highlight-gold { color:var(--gold); }
+
+.app-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+@media (max-width:500px) {
+  .app-grid { grid-template-columns:1fr; }
+  .banner h1 { font-size:52px; }
+}
+
+.app-card {
+  background: linear-gradient(145deg, #080820 0%, #040410 100%);
+  border: 1px solid #202060;
+  border-radius: 6px;
+  padding: 16px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.app-card::before {
+  content:'';
+  position:absolute; top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg, var(--cyan), var(--pink), var(--purple));
+}
+
+.app-card:hover { transform:translateY(-2px); border-color:#4040aa; }
+.app-card-icon { font-size:32px; margin-bottom:8px; display:block; }
+.app-card-name {
+  font-family:'VT323',monospace; font-size:20px;
+  color:var(--cyan); margin-bottom:6px; letter-spacing:1px;
+}
+.app-card-desc { font-size:11px; color:#6080a0; line-height:1.7; margin-bottom:12px; }
+.app-tag {
+  display:inline-block; background:#0a0a30;
+  border:1px solid #1a1a60; color:#4060a0;
+  font-size:10px; padding:2px 6px; border-radius:2px; margin:2px 2px 6px 0;
+}
+
+.dl-btn {
+  display:inline-block; padding:6px 14px;
+  font-family:'VT323',monospace; font-size:16px;
+  letter-spacing:1px; text-decoration:none; color:#000;
+  background:linear-gradient(180deg, #7fe0a5 0%, #3faa65 40%, #1a7a40 60%, #3faa65 100%);
+  border:2px solid #2a8a50;
+  border-top-color:#aaffd0; border-left-color:#aaffd0;
+  border-bottom-color:#0a3a20; border-right-color:#0a3a20;
+  margin-top:6px; margin-right:4px;
+}
+.dl-btn:hover { filter:brightness(1.15); }
+
+.skill-list { display:flex; flex-wrap:wrap; gap:8px; }
+.skill-chip {
+  background:linear-gradient(145deg, #0a0a30, #060618);
+  border:1px solid #202080; border-top-color:#4040aa;
+  color:var(--silver); font-family:'VT323',monospace;
+  font-size:16px; padding:4px 12px; letter-spacing:1px;
+  position:relative;
+}
+.skill-chip::after {
+  content:''; position:absolute; bottom:0; right:0;
+  border:4px solid transparent;
+  border-bottom-color:var(--cyan); border-right-color:var(--cyan);
+  opacity:0.4;
+}
+
+.link-item {
+  display:flex; align-items:center; gap:12px;
+  padding:10px 0; border-bottom:1px solid #0a0a2a;
+  text-decoration:none; color:var(--silver);
+  transition:color 0.2s;
+}
+.link-item:last-child { border-bottom:none; }
+.link-item:hover { color:var(--cyan); }
+.link-icon {
+  width:32px; height:32px;
+  background:linear-gradient(145deg, #0a0a30, #060618);
+  border:1px solid #202080;
+  display:flex; align-items:center; justify-content:center;
+  font-size:16px; flex-shrink:0;
+}
+.link-url { font-size:11px; color:#3050a0; margin-top:2px; }
+.link-item:hover .link-url { color:var(--cyan); opacity:0.7; }
+
+.guestbook-note {
+  background:linear-gradient(145deg, #0a0820, #060510);
+  border:1px solid #201840; border-left:3px solid var(--pink);
+  padding:12px 16px; margin-bottom:10px; font-size:12px;
+}
+.gb-name { font-family:'VT323',monospace; font-size:18px; color:var(--pink); margin-bottom:4px; }
+.gb-msg { color:#8080a0; line-height:1.6; }
+.gb-date { color:#303060; font-size:10px; margin-top:4px; }
+
+.footer {
+  text-align:center; padding:32px 16px;
+  font-family:'VT323',monospace; font-size:16px;
+  color:#202060; letter-spacing:2px;
+}
+.footer span { color:var(--cyan); }
+</style>
 </head>
 <body>
-<div class="container">
+<div class="wrapper">
 
-  <!-- Header -->
-  <div class="header">
-    <div class="avatar">S</div>
-    <div class="header-text">
-      <h1>Sugam Kharel</h1>
-      <p>Damak, Koshi, Nepal 🇳🇵</p>
-      <span class="badge">Python</span>
-      <span class="badge">Kivy</span>
-      <span class="badge">Android</span>
-      <span class="badge">Beginner dev</span>
+  <div class="ticker-wrap">
+    <div class="ticker">
+      <span class="ticker-item">SUGAM KHAREL<span>★</span>DEVELOPER FROM NEPAL<span>★</span>PYTHON<span>★</span>ANDROID<span>★</span>KIVY<span>★</span>LINUX<span>★</span></span>
+      <span class="ticker-item">SUGAM KHAREL<span>★</span>DEVELOPER FROM NEPAL<span>★</span>PYTHON<span>★</span>ANDROID<span>★</span>KIVY<span>★</span>LINUX<span>★</span></span>
     </div>
   </div>
 
-  <!-- About -->
-  <div class="section">
-    <div class="section-label">About</div>
-    <div class="about">
-      Hey, I'm Sugam — a self-taught programmer from Nepal learning Python
-      and building Android apps. I make lightweight, offline-first apps
-      designed for low-end devices. Everything I build runs on my old
-      Samsung J2 Pro before I ship it.
+  <div class="banner">
+    <div class="banner-top">// personal site v2.0 //</div>
+    <h1>SUGAM.EXE</h1>
+    <div class="banner-sub">developer · nepal · 2025<span>_</span></div>
+  </div>
+
+  <div class="nav">
+    <a href="#about">ABOUT</a>
+    <a href="#apps">APPS</a>
+    <a href="#skills">SKILLS</a>
+    <a href="#links">LINKS</a>
+    <a href="#guestbook">GUESTBOOK</a>
+  </div>
+
+  <div class="construction">⚠ SITE UNDER CONSTRUCTION ⚠ MORE STUFF COMING SOON ⚠</div>
+
+  <div class="counter-box">
+    <div class="counter-label">VISITORS SINCE 2025</div>
+    <div class="counter-digits">
+      <div class="digit">0</div>
+      <div class="digit">0</div>
+      <div class="digit">0</div>
+      <div class="digit">1</div>
+      <div class="digit">3</div>
+      <div class="digit">7</div>
     </div>
   </div>
 
-  <div class="divider"></div>
+  <div class="neon-div"></div>
 
-  <!-- Apps -->
-  <div class="section">
-    <div class="section-label">Apps</div>
+  <div class="panel" id="about">
+    <div class="panel-title">
+      <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+      &nbsp;ABOUT.TXT
+    </div>
+    <div class="panel-body">
+      <div class="about-text">
+        <span class="hi">Hey!! Welcome to my site :)</span>
+        I'm <span class="highlight">Sugam Kharel</span>, a self-taught programmer
+        from <span class="highlight-gold">Damak, Koshi, Nepal 🇳🇵</span>.<br><br>
+        I build <span class="highlight">Android apps</span> using Python + Kivy.
+        Everything I make runs on my old
+        <span class="highlight-pink">Samsung J2 Pro</span> before I ship it —
+        so it's guaranteed to work on low-end devices.<br><br>
+        I'm just a beginner having fun learning to code. No fancy CS degree,
+        no bootcamp — just me, my laptop, and a lot of Stack Overflow.<br><br>
+        Currently learning: <span class="highlight">Python · Android dev · HTML/CSS · Linux</span>
+      </div>
+    </div>
+  </div>
 
-    <div class="app-card">
-      <div class="app-icon">⏱</div>
-      <div class="app-info">
-        <div class="app-name">Timer — Pomodoro Session Logger</div>
-        <div class="app-desc">
-          A minimal Pomodoro timer with session logging, weekly stats,
-          custom tags, dark/light theme, and alarm that bypasses silent mode.
-          Built with Python + Kivy. Works 100% offline.
+  <div class="neon-div"></div>
+
+  <div class="panel" id="apps">
+    <div class="panel-title">
+      <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+      &nbsp;MY_APPS.EXE
+    </div>
+    <div class="panel-body">
+      <div class="app-grid">
+        <div class="app-card">
+          <span class="app-card-icon">⏱</span>
+          <div class="app-card-name">TIMER.APK</div>
+          <div class="app-card-desc">Advanced Pomodoro timer with session logging, weekly stats, custom tags, dark/light theme. Built with Python + Kivy. 100% offline.</div>
+          <div>
+            <span class="app-tag">Python</span>
+            <span class="app-tag">Kivy</span>
+            <span class="app-tag">SQLite</span>
+            <span class="app-tag">Offline</span>
+          </div>
+          <a class="dl-btn" href="https://sugam3771.itch.io" target="_blank">▼ DOWNLOAD</a>
         </div>
-        <div class="app-links">
-          <a class="dl-btn" href="https://sugam01.itch.io/pomodoro" target="_blank">
-            ↓ Download APK
-          </a>
-          <a class="dl-btn secondary" href="https://sugam01.itch.io/pomodoro" target="_blank">
-            itch.io page
-          </a>
+        <div class="app-card">
+          <span class="app-card-icon">🍅</span>
+          <div class="app-card-name">POMODORO.APK</div>
+          <div class="app-card-desc">My first Android app. Minimal focus timer with session notes and offline SQLite logging. Lightweight for low-RAM devices.</div>
+          <div>
+            <span class="app-tag">Python</span>
+            <span class="app-tag">Kivy</span>
+            <span class="app-tag">First app</span>
+          </div>
+          <a class="dl-btn" href="https://sugam3771.itch.io/pomodoro" target="_blank">▼ DOWNLOAD</a>
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="app-card">
-      <div class="app-icon">🍅</div>
-      <div class="app-info">
-        <div class="app-name">Pomodoro — Minimal Focus Timer</div>
-        <div class="app-desc">
-          My first Android app. Clean dark UI, session notes, offline SQLite
-          logging. Optimized for low-RAM devices.
-        </div>
-        <div class="app-links">
-          <a class="dl-btn" href="https://sugam01.itch.io/pomodoro" target="_blank">
-            ↓ Download APK
-          </a>
-        </div>
+  <div class="neon-div"></div>
+
+  <div class="panel" id="skills">
+    <div class="panel-title">
+      <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+      &nbsp;SKILLS.SYS
+    </div>
+    <div class="panel-body">
+      <div class="skill-list">
+        <div class="skill-chip">Python</div>
+        <div class="skill-chip">Kivy</div>
+        <div class="skill-chip">Buildozer</div>
+        <div class="skill-chip">SQLite</div>
+        <div class="skill-chip">Android</div>
+        <div class="skill-chip">HTML</div>
+        <div class="skill-chip">CSS</div>
+        <div class="skill-chip">Git</div>
+        <div class="skill-chip">Linux</div>
+        <div class="skill-chip">EndeavourOS</div>
+        <div class="skill-chip">Hyprland</div>
+        <div class="skill-chip">Zsh</div>
+        <div class="skill-chip">ADB</div>
       </div>
     </div>
-
   </div>
 
-  <div class="divider"></div>
+  <div class="neon-div"></div>
 
-  <!-- Links -->
-  <div class="section">
-    <div class="section-label">Links</div>
-    <div class="link-row">
-      <span class="icon">🎮</span>
-      <span>itch.io</span>
-      <a href="https://sugam01.itch.io" target="_blank">sugam01.itch.io</a>
+  <div class="panel" id="links">
+    <div class="panel-title">
+      <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+      &nbsp;LINKS.URL
     </div>
-    <div class="link-row">
-      <span class="icon">💻</span>
-      <span>GitHub</span>
-      <a href="https://github.com/sugam01" target="_blank">github.com/sugam01</a>
-    </div>
-  </div>
-
-  <div class="divider"></div>
-
-  <!-- Skills -->
-  <div class="section">
-    <div class="section-label">What I know</div>
-    <div class="skill-grid">
-      <span class="skill">Python</span>
-      <span class="skill">Kivy</span>
-      <span class="skill">Buildozer</span>
-      <span class="skill">SQLite</span>
-      <span class="skill">Android APK</span>
-      <span class="skill">HTML</span>
-      <span class="skill">CSS</span>
-      <span class="skill">Git</span>
-      <span class="skill">Linux</span>
-      <span class="skill">EndeavourOS</span>
+    <div class="panel-body">
+      <a class="link-item" href="https://sugam3771.itch.io" target="_blank">
+        <div class="link-icon">🎮</div>
+        <div><div>itch.io — download my apps</div><div class="link-url">sugam3771.itch.io</div></div>
+      </a>
+      <a class="link-item" href="https://github.com/sugam3771" target="_blank">
+        <div class="link-icon">💻</div>
+        <div><div>GitHub — source code</div><div class="link-url">github.com/sugam3771</div></div>
+      </a>
+      <a class="link-item" href="https://sugam3771.github.io/sugam.github.io" target="_blank">
+        <div class="link-icon">🌐</div>
+        <div><div>This website</div><div class="link-url">sugam3771.github.io/sugam.github.io</div></div>
+      </a>
     </div>
   </div>
 
-  <!-- Footer -->
+  <div class="neon-div"></div>
+
+  <div class="panel" id="guestbook">
+    <div class="panel-title">
+      <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+      &nbsp;GUESTBOOK.LOG
+    </div>
+    <div class="panel-body">
+      <div class="guestbook-note">
+        <div class="gb-name">visitor_001</div>
+        <div class="gb-msg">cool site!! love the retro vibe 🔥</div>
+        <div class="gb-date">2025-04-20 // 11:32</div>
+      </div>
+      <div class="guestbook-note">
+        <div class="gb-name">anon_user</div>
+        <div class="gb-msg">downloaded the timer app, works great on my old phone!</div>
+        <div class="gb-date">2025-04-21 // 08:14</div>
+      </div>
+      <div class="guestbook-note">
+        <div class="gb-name">dev_lurker</div>
+        <div class="gb-msg">keep building bro, respect from a fellow beginner 🇳🇵</div>
+        <div class="gb-date">2025-04-22 // 19:45</div>
+      </div>
+      <br>
+      <div style="color:#303060;font-family:'VT323',monospace;font-size:16px;letter-spacing:1px;">
+        // guestbook form coming soon... 🚧
+      </div>
+    </div>
+  </div>
+
   <div class="footer">
-    Made by Sugam Kharel · Damak, Nepal ·
-    <a href="https://sugam01.itch.io" style="color:#2a2a2a">itch.io</a>
+    <span>SUGAM KHAREL</span> · DAMAK, NEPAL · EST. 2025<br>
+    BEST VIEWED IN 800x600 · NETSCAPE NAVIGATOR 4.0
   </div>
 
 </div>
+<script>
+const title = document.querySelector('.banner h1');
+const original = 'SUGAM.EXE';
+const chars = '!@#$%^&*<>?/\\|[]{}~`';
+setInterval(() => {
+  if (Math.random() > 0.92) {
+    let g = '';
+    for (let c of original)
+      g += Math.random() > 0.85 ? chars[Math.floor(Math.random()*chars.length)] : c;
+    title.textContent = g;
+    setTimeout(() => title.textContent = original, 80);
+  }
+}, 2000);
+</script>
 </body>
 </html>
